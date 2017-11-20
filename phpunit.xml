@@ -1,4 +1,8 @@
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit
+        bootstrap="vendor/autoload.php"
+        colors="true"
+        verbose="true"
+>
     <testsuites>
         <testsuite name="tic-tac-toe">
             <directory>test</directory>
