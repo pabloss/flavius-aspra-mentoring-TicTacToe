@@ -1,0 +1,20 @@
+{
+    "name": "pavulon-mentored/flavius-aspra-tictactoe",
+    "description": "First excercice on mentoring by Flavius Aspra",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+          "\\": "src/",
+          "Test\\": "tests/"
+        }
+    },
+    "require": {
+        "phpunit/phpunit": "^6.4"
+    },
+    "authors": [
+        {
+            "name": "Paweł Zimnowodzki",
+            "email": "pawel@prowebsoft.pl"
+        }
+    ]
+}
