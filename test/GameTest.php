@@ -5,6 +5,8 @@ namespace TicTacToeTest;
 
 use TicTacToe\Game;
 use PHPUnit\Framework\TestCase;
+use TicTacToe\PlayerO;
+use TicTacToe\PlayerX;
 
 class GameTest extends TestCase
 {
@@ -29,10 +31,10 @@ class GameTest extends TestCase
     public function gameHasPlayerX()
     {
         self::assertTrue(\class_exists(
-            "TicTacToe\PlayerX"
+            PlayerX::class
         ));
         self::assertInstanceOf(
-            "TicTacToe\PlayerX",
+            PlayerX::class,
             $this->game->playerX()
         );
     }
@@ -43,10 +45,10 @@ class GameTest extends TestCase
     public function gameHasPlayerO()
     {
         self::assertTrue(\class_exists(
-            "TicTacToe\PlayerO"
+            PlayerO::class
         ));
         self::assertInstanceOf(
-            "TicTacToe\PlayerO",
+            PlayerO::class,
             $this->game->playerO()
         );
     }
