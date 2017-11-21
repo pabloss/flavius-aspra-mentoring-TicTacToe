@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace TicTacToeTest;
 
 use PHPUnit\Framework\TestCase;
+use TicTacToe\Board;
 
 class BoardTest extends TestCase
 {
@@ -12,6 +13,6 @@ class BoardTest extends TestCase
      */
     public function boardClassExists()
     {
-        self::assertTrue(class_exists("TicTacToe\Board"));
+        self::assertTrue(class_exists(Board::class));
     }
 }
