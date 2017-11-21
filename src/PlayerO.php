@@ -5,4 +5,8 @@ namespace TicTacToe;
 
 class PlayerO
 {
+    public function sign($x, $y, $board)
+    {
+        $board->sign($x, $y, 'O');
+    }
 }
