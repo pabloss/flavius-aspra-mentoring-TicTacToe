@@ -67,5 +67,6 @@ class GameTest extends TestCase
 
         $playerX->sign(1, 1, $board);
         self::assertEquals('X', $board->tile(1, 1));
+        self::assertNotEquals('X', $board->tile(2, 1));
     }
 }
