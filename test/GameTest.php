@@ -69,4 +69,19 @@ class GameTest extends TestCase
         self::assertEquals('X', $board->tile(1, 1));
         self::assertNotEquals('X', $board->tile(2, 1));
     }
+
+    /**
+     * @test
+     */
+    public function playerOCanSignHisSignOnBoard()
+    {
+        /** @var PlayerO $playerO */
+        $playerO = $this->game->playerO();
+
+        /** @var Board $board */
+        $board = $this->game->board();
+        $playerO->sign(2, 2, $board);
+        self::assertEquals('X', $board->tile(2, 2));
+        self::assertNotEquals('X', $board->tile(1, 2));
+    }
 }
