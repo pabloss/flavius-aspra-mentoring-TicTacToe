@@ -28,7 +28,8 @@ class BoardTest extends TestCase
      */
     public function boardHasNineTiles()
     {
-        self::assertEquals(9,
+        self::assertEquals(
+            9,
             count($this->board->getTiles())
         );
     }
