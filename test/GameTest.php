@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace TicTacToeTest;
 
+use TicTacToe\Board;
 use TicTacToe\Game;
 use PHPUnit\Framework\TestCase;
 use TicTacToe\PlayerO;
@@ -51,5 +52,20 @@ class GameTest extends TestCase
             PlayerO::class,
             $this->game->playerO()
         );
+    }
+
+    /**
+     * @test
+     */
+    public function playerXCanSignHisSignOnBoard()
+    {
+        /** @var PlayerX $playerX */
+        $playerX = $this->game->playerX();
+
+        /** @var Board $board */
+        $board = $this->game->board();
+
+        $playerX->sign(1, 1, $board);
+        self::assertEquals('X', $board->tile(1, 1));
     }
 }

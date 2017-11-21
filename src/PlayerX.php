@@ -5,4 +5,7 @@ namespace TicTacToe;
 
 class PlayerX
 {
+    public function sign()
+    {
+    }
 }

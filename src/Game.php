@@ -14,4 +14,9 @@ class Game
     {
         return new PlayerO();
     }
+
+    public function board()
+    {
+        return new Board();
+    }
 }
