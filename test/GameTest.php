@@ -84,4 +84,21 @@ class GameTest extends TestCase
         self::assertEquals('O', $board->tile(2, 2));
         self::assertNotEquals('O', $board->tile(1, 2));
     }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function boardShouldNotAllowToSignNotExistedTiles()
+    {
+        /** @var PlayerO $playerO */
+        $playerO = $this->game->playerO();
+
+        /** @var Board $board */
+        $board = $this->game->board();
+
+        $playerO->sign(4, 4, $board);
+        $playerO->sign(0, 0, $board);
+        $playerO->sign(-1, -10, $board);
+    }
 }

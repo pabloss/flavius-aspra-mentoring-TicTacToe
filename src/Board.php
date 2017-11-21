@@ -24,6 +24,12 @@ class Board
 
     public function sign($x, $y, $char)
     {
+        if (
+            ($y - 1) * 3 + $x >= 9 ||
+            $y < 1 || $x < 1
+        ) {
+            throw new \InvalidArgumentException();
+        }
         $this->tiles[($y - 1) * 3 + $x] = $char;
     }
 }
