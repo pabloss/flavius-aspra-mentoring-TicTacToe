@@ -4,8 +4,8 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-          "\\": "src/",
-          "Test\\": "tests/"
+          "TicTacToe\\": "src/",
+          "TicTacToeTest\\": "test/"
         }
     },
     "require": {
