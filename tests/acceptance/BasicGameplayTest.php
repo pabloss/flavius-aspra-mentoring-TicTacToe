@@ -19,15 +19,13 @@ class BasicGameplayTest extends TestCase
      * -X-
      * -X-
      *
-     * BAD: initialization and take tile may not be intertwined
      * Hint: best way of solving a problem is making sure that the problem does
      * not exist in the first place
      */
     public function complete_happy_path_gameplay()
     {
         $game = new TicTacToe();
-        $playerX = $game->player('X');
-        $player0 = $game->player('0');
+        list($playerX, $player0) = $game->players('X', '0');
         $playerX->takeTile(new Tile(1, 1));
         $player0->takeTile(new Tile(0, 0));
         $playerX->takeTile(new Tile(0, 1));
