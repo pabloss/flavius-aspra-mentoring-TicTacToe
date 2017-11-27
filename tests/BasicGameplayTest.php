@@ -1,6 +1,11 @@
 <?php
 declare(strict_types=1);
 
+use PHPUnit\Framework\TestCase;
+
+use TicTacToe\Game as TicTacToe;
+use TicTacToe\Tile;
+
 class BasicGameplayTest extends TestCase
 {
 
