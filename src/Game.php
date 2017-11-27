@@ -7,6 +7,6 @@ class Game
 {
     public function players($symbolX, $symbol0)
     {
-        return [new Player(), new Player()];
+        return [new Player($symbolX), new Player($symbol0)];
     }
 }
