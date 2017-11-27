@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+namespace TicTacToeTest\acceptance;
+
 use PHPUnit\Framework\TestCase;
 
 use TicTacToe\Game as TicTacToe;
