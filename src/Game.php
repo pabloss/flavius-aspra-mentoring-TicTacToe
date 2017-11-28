@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace TicTacToe;
 
 use TicTacToe\Exception\DuplicatePlayersException;
+use TicTacToe\Exception\DuplicateTurnsException;
 
 class Game
 {
     private $board;
     private $history;
+    private $lastTurn;
 
     public function __construct()
     {
@@ -31,6 +33,13 @@ class Game
 
     public function takeFile(Tile $tile, Player $player)
     {
+        if (
+            !empty($this->lastTurn) &&
+            $player->symbol() === $this->lastTurn
+        ) {
+            throw new DuplicateTurnsException();
+        }
+        $this->lastTurn = $player->symbol();
         $this->board[$tile->column() + 3*$tile->row()] = $player->symbol();
         $this->history[\count($this->history) % 9] = [$tile->row(), $tile->column()];
     }
