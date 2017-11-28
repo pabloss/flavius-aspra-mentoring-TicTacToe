@@ -33,6 +33,20 @@ class Game
 
     public function takeFile(Tile $tile, Player $player)
     {
+        $this->saveLastTurn($player);
+
+        $this->markBoard($tile, $player);
+
+        $this->saveTurnToHistory($tile);
+    }
+
+    public function history()
+    {
+        return $this->history;
+    }
+
+    private function saveLastTurn(Player $player)
+    {
         if (
             !empty($this->lastTurn) &&
             $player->symbol() === $this->lastTurn
@@ -40,12 +54,15 @@ class Game
             throw new DuplicateTurnsException();
         }
         $this->lastTurn = $player->symbol();
-        $this->board[$tile->column() + 3*$tile->row()] = $player->symbol();
-        $this->history[\count($this->history) % 9] = [$tile->row(), $tile->column()];
     }
 
-    public function history()
+    private function markBoard(Tile $tile, Player $player): void
     {
-        return $this->history;
+        $this->board[$tile->column() + 3 * $tile->row()] = $player->symbol();
+    }
+
+    private function saveTurnToHistory(Tile $tile): void
+    {
+        $this->history[\count($this->history) % 9] = [$tile->row(), $tile->column()];
     }
 }
