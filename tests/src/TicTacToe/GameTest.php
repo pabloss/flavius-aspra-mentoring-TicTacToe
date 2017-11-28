@@ -32,5 +32,6 @@ class GameTest extends TestCase
         $playerX->takeTile(new \TicTacToe\Tile(1, 0));
         $player0->takeTile(new \TicTacToe\Tile(1, 1));
         self::assertEquals(['X', ' ', ' ', ' ', '0', 'X', ' ', '0', ' '], $game->board());
+        self::assertEquals([[0, 0], [0, 1], [1, 0], [1, 1]], $game->history());
     }
 }
