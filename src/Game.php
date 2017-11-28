@@ -5,6 +5,7 @@ namespace TicTacToe;
 
 use TicTacToe\Exception\DuplicatePlayersException;
 use TicTacToe\Exception\DuplicateTurnsException;
+use TicTacToe\Exception\StartByPlayer0Exception;
 
 class Game
 {
@@ -101,6 +102,8 @@ class Game
 
     private $players;
 
+    private $startingPlayerSymbol;
+
     public function __construct()
     {
         $this->board = \array_fill(0, 9, ' ');
@@ -112,6 +115,8 @@ class Game
         if ($symbolX === $symbol0) {
             throw new DuplicatePlayersException();
         }
+
+        $this->startingPlayerSymbol = $symbolX;
 
         $this->players[$symbolX] = new Player($symbolX, $this);
         $this->players[$symbol0] = new Player($symbol0, $this);
@@ -129,6 +134,13 @@ class Game
 
     public function takeTile(Tile $tile, Player $player)
     {
+        if (
+            empty($this->lastTurn) &&
+            $player->symbol() !== $this->startingPlayerSymbol
+        ) {
+            throw new StartByPlayer0Exception();
+        }
+
         $this->saveLastTurn($player);
 
         $this->markBoard($tile, $player);
