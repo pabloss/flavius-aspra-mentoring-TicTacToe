@@ -22,6 +22,6 @@ class Player
 
     public function takeTile(Tile $tile)
     {
-        $this->game->takeFile($tile, $this);
+        $this->game->takeTile($tile, $this);
     }
 }

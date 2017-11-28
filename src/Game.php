@@ -127,7 +127,7 @@ class Game
         return $this->board;
     }
 
-    public function takeFile(Tile $tile, Player $player)
+    public function takeTile(Tile $tile, Player $player)
     {
         $this->saveLastTurn($player);
 
