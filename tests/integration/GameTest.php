@@ -59,4 +59,15 @@ class GameTest extends TestCase
         $expectedBoard[4] = 'X';
         self::assertEquals($expectedBoard, $game->board());
     }
+
+    /**
+     * @test
+     * @expectedException TicTacToe\Exception\StartByPlayer0Exception
+     */
+    public function game_could_not_allow_to_be_started_by_player0()
+    {
+        $game = new \TicTacToe\Game();
+        list($playerX, $player0) = $game->players('X', '0');
+        $player0->takeTile(new \TicTacToe\Tile(0, 0));
+    }
 }
