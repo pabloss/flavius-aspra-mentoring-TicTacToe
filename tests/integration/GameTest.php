@@ -19,4 +19,14 @@ class GameTest extends TestCase
         self::assertEquals('X', $playerX->symbol());
         self::assertEquals('0', $player0->symbol());
     }
+
+    /**
+     * @test
+     * @expectedException TicTacToe\Exception\DuplicatePlayersException
+     */
+    public function duplicate_players_not_allowed()
+    {
+        $game = new TicTacToe();
+        $game->players('X', 'X');
+    }
 }
