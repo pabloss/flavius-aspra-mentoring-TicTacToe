@@ -147,6 +147,13 @@ class Game
             $this->findWinnerByBoardPatterns('0');
     }
 
+    public function start()
+    {
+        $this->lastTurn = null;
+        $this->board = \array_fill(0, 9, ' ');
+        $this->history = [];
+    }
+
     private function saveLastTurn(Player $player)
     {
         if (
