@@ -32,5 +32,14 @@ class BasicGameplayTest extends TestCase
         $player0->takeTile(new Tile(0, 2));
         $playerX->takeTile(new Tile(2, 1));
         $this->assertSame($playerX, $game->winner());
+
+        // We are swapping players
+        list($playerX, $player0) = $game->players('X', '0');
+        $player0->takeTile(new Tile(1, 1));
+        $playerX->takeTile(new Tile(0, 0));
+        $player0->takeTile(new Tile(0, 1));
+        $playerX->takeTile(new Tile(0, 2));
+        $player0->takeTile(new Tile(2, 1));
+        $this->assertSame($player0, $game->winner());
     }
 }
