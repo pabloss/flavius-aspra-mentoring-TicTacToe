@@ -64,24 +64,6 @@ class GameTest extends TestCase
     /**
      * @test
      */
-    public function starting_allows_to_repeat_player_x_turn()
-    {
-        $game = new \TicTacToe\Game();
-        list($playerX, $player0) = $game->players('X', '0');
-        $playerX->takeTile(new \TicTacToe\Tile(0, 0));
-
-        $game->start();
-        $playerX->takeTile(new \TicTacToe\Tile(1, 1));
-        self::assertEquals([[1, 1]], $game->history());
-
-        $expectedBoard = array_fill(0, 9, ' ');
-        $expectedBoard[4] = 'X';
-        self::assertEquals($expectedBoard, $game->board());
-    }
-
-    /**
-     * @test
-     */
     public function game_could_not_allow_to_be_started_by_player0()
     {
         $game = new \TicTacToe\Game();
