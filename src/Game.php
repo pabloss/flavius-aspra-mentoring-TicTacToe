@@ -3,10 +3,6 @@ declare(strict_types=1);
 
 namespace TicTacToe;
 
-use TicTacToe\Exception\DuplicatePlayersException;
-use TicTacToe\Exception\DuplicateTurnsException;
-use TicTacToe\Exception\StartByPlayer0Exception;
-
 class Game
 {
     const patterns = [
@@ -96,6 +92,11 @@ class Game
             ]
         ];
 
+    const OK = 0;
+    const DUPLICATED_PLAYERS_ERROR = 1;
+    const DUPLICATED_TURNS_ERROR = 2;
+    const GAME_STARTED_BY_PLAYER0_ERROR = 4;
+
     private $board;
     private $history;
     private $lastTurn;
@@ -104,16 +105,19 @@ class Game
 
     private $startingPlayerSymbol;
 
+    private $errors;
+
     public function __construct()
     {
         $this->board = \array_fill(0, 9, ' ');
         $this->history = [];
+        $this->errors = 0;
     }
 
     public function players($symbolX, $symbol0)
     {
         if ($symbolX === $symbol0) {
-            throw new DuplicatePlayersException();
+            $this->errors |= self::DUPLICATED_PLAYERS_ERROR;
         }
 
         $this->startingPlayerSymbol = $symbolX;
@@ -138,7 +142,7 @@ class Game
             empty($this->lastTurn) &&
             $player->symbol() !== $this->startingPlayerSymbol
         ) {
-            throw new StartByPlayer0Exception();
+            $this->errors |= self::GAME_STARTED_BY_PLAYER0_ERROR;
         }
 
         $this->saveLastTurn($player);
@@ -166,13 +170,18 @@ class Game
         $this->history = [];
     }
 
+    public function errors()
+    {
+        return $this->errors;
+    }
+
     private function saveLastTurn(Player $player)
     {
         if (
             !empty($this->lastTurn) &&
             $player->symbol() === $this->lastTurn
         ) {
-            throw new DuplicateTurnsException();
+            $this->errors |= self::DUPLICATED_TURNS_ERROR;
         }
         $this->lastTurn = $player->symbol();
     }
