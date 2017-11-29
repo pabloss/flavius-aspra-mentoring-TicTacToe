@@ -22,17 +22,19 @@ class GameTest extends TestCase
 
     /**
      * @test
-     * @expectedException TicTacToe\Exception\DuplicatePlayersException
      */
     public function duplicate_players_not_allowed()
     {
         $game = new TicTacToe();
         $game->players('X', 'X');
+        self::assertEquals(
+            TicTacToe::DUPLICATED_PLAYERS_ERROR,
+            $game->errors() & TicTacToe::DUPLICATED_PLAYERS_ERROR
+        );
     }
 
     /**
      * @test
-     * @expectedException TicTacToe\Exception\DuplicateTurnsException
      */
     public function players_take_turns()
     {
@@ -40,6 +42,10 @@ class GameTest extends TestCase
         list($playerX, $player0) = $game->players('X', '0');
         $playerX->takeTile(new \TicTacToe\Tile(0, 0));
         $playerX->takeTile(new \TicTacToe\Tile(1, 1));
+        self::assertEquals(
+            TicTacToe::DUPLICATED_TURNS_ERROR,
+            $game->errors() & TicTacToe::DUPLICATED_TURNS_ERROR
+        );
     }
 
     /**
@@ -62,12 +68,16 @@ class GameTest extends TestCase
 
     /**
      * @test
-     * @expectedException TicTacToe\Exception\StartByPlayer0Exception
      */
     public function game_could_not_allow_to_be_started_by_player0()
     {
         $game = new \TicTacToe\Game();
         list($playerX, $player0) = $game->players('X', '0');
         $player0->takeTile(new \TicTacToe\Tile(0, 0));
+
+        self::assertEquals(
+            TicTacToe::GAME_STARTED_BY_PLAYER0_ERROR,
+            $game->errors() &  TicTacToe::GAME_STARTED_BY_PLAYER0_ERROR
+        );
     }
 }
