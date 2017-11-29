@@ -19,7 +19,7 @@ class GameTest extends TestCase
         self::assertInstanceOf('TicTacToe\Player', $playerX);
         self::assertInstanceOf('TicTacToe\Player', $player0);
     }
-    
+
     /**
      * @test
      */
