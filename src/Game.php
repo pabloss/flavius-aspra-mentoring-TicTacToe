@@ -187,11 +187,11 @@ class Game
         $this->history[\count($this->history) % 9] = [$tile->row(), $tile->column()];
     }
 
-    private function countFieldsMatchedToPattern($pattern)
+    private function countFieldsMatchedToPattern($pattern, $symbol)
     {
         $foundCount = 0;
         foreach ($this->board as $key => $field) {
-            if ($field == 'X' && $pattern[$key] == $field) {
+            if ($field == $symbol && $pattern[$key] == $field) {
                 $foundCount++;
             }
         }
@@ -200,11 +200,15 @@ class Game
 
     private function findWinnerByBoardPatterns($symbol)
     {
+        $foundCount = 0;
         foreach (self::patterns[$symbol] as $pattern) {
-            $foundCount = $this->countFieldsMatchedToPattern($pattern);
+            $foundCount = $this->countFieldsMatchedToPattern($pattern, $symbol);
             if ($foundCount === 3) {
                 break;
             }
+        }
+        if ($foundCount !== 3) {
+            return null;
         }
         return $this->players[$symbol];
     }
