@@ -32,9 +32,12 @@ class BasicGameplayTest extends TestCase
         $player0->takeTile(new Tile(0, 2));
         $playerX->takeTile(new Tile(2, 1));
         $this->assertSame($playerX, $game->winner());
+    }
 
+    public function complete_happy_path_gameplay_other_player_wins()
+    {
         // We are swapping players
-        $game->start();
+        $game = new TicTacToe();
         list($playerX, $player0) = $game->players('X', '0');
         $playerX->takeTile(new Tile(2, 2));
         $player0->takeTile(new Tile(1, 1));
