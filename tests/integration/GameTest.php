@@ -6,9 +6,22 @@ namespace TicTacToeTest\integration;
 use PHPUnit\Framework\TestCase;
 
 use TicTacToe\Game as TicTacToe;
+use TicTacToe\Player;
 
 class GameTest extends TestCase
 {
+
+    /**
+     * @test
+     */
+    public function create_players()
+    {
+        $game = new TicTacToe();
+        list($playerX, $player0) = $game->players('X', '0');
+        self::assertInstanceOf(Player::class, $playerX);
+        self::assertInstanceOf(Player::class, $player0);
+    }
+
     /**
      * @test
      */
