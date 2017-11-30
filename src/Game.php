@@ -68,6 +68,7 @@ class Game
         $this->board = \array_fill(0, 9, ' ');
         $this->history = [];
         $this->errors = self::OK; // Just to remember: such representation of start value explains initial state
+        $this->players = [];
     }
 
     public function players($symbolX, $symbol0)
@@ -78,8 +79,19 @@ class Game
 
         $this->startingPlayerSymbol = $symbolX;
 
-        $this->players[$symbolX] = new Player($symbolX, $this);
-        $this->players[$symbol0] = new Player($symbol0, $this);
+        if (
+            empty($this->players) ||
+            (
+                isset($this->players[$symbolX]) && empty($this->players[$symbolX])
+            )
+            ||
+            (
+                isset($this->players[$symbol0]) && empty($this->players[$symbol0])
+            )
+        ) {
+            $this->players[$symbolX] = new Player($symbolX, $this);
+            $this->players[$symbol0] = new Player($symbol0, $this);
+        }
 
         return [
             $this->players[$symbolX],
