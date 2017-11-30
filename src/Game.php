@@ -67,7 +67,7 @@ class Game
     {
         $this->board = \array_fill(0, 9, ' ');
         $this->history = [];
-        $this->errors = 0;
+        $this->errors = self::OK; // Just to remember: such representation of start value explains initial state
     }
 
     public function players($symbolX, $symbol0)
