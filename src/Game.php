@@ -113,11 +113,13 @@ class Game
             $this->errors |= self::GAME_STARTED_BY_PLAYER0_ERROR;
         }
 
-        $this->saveLastTurn($player);
+        if ($this->errors() === self::OK) {
+            $this->saveLastTurn($player);
 
-        $this->markBoard($tile, $player);
+            $this->markBoard($tile, $player);
 
-        $this->saveTurnToHistory($tile);
+            $this->saveTurnToHistory($tile);
+        }
     }
 
     public function history()
