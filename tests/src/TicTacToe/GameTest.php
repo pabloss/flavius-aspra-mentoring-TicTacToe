@@ -24,4 +24,17 @@ class GameTest extends TestCase
         self::assertEquals(['X', '0', ' ', 'X', '0', ' ', ' ', ' ', ' '], $game->board());
         self::assertEquals([[0, 0], [0, 1], [1, 0], [1, 1]], $game->history());
     }
+
+    /**
+     * @test
+     */
+    public function game_should_not_produce_new_players_if_ones_already_exist()
+    {
+        $game = new TicTacToe();
+        list($playerX1, $player01) = $game->players('X', '0');
+        list($playerX2, $player02) = $game->players('X', '0');
+
+        self::assertSame($playerX1, $playerX2);
+        self::assertSame($player01, $player02);
+    }
 }
