@@ -6,89 +6,45 @@ namespace TicTacToe;
 class Game
 {
     const patterns = [
-        'X' => [
             [
-            'X', 'X', 'X',
+            '#', '#', '#',
             ' ', ' ', ' ',
             ' ', ' ', ' ',
             ],
             [
             ' ', ' ', ' ',
-            'X', 'X', 'X',
+            '#', '#', '#',
             ' ', ' ', ' ',
             ],
             [
             ' ', ' ', ' ',
             ' ', ' ', ' ',
-            'X', 'X', 'X',
+            '#', '#', '#',
             ],
             [
-            'X', ' ', ' ',
-            'X', ' ', ' ',
-            'X', ' ', ' ',
+            '#', ' ', ' ',
+            '#', ' ', ' ',
+            '#', ' ', ' ',
             ],
             [
-            ' ', 'X', ' ',
-            ' ', 'X', ' ',
-            ' ', 'X', ' ',
+            ' ', '#', ' ',
+            ' ', '#', ' ',
+            ' ', '#', ' ',
             ],
             [
-            ' ', ' ', 'X',
-            ' ', ' ', 'X',
-            ' ', ' ', 'X',
+            ' ', ' ', '#',
+            ' ', ' ', '#',
+            ' ', ' ', '#',
             ],
             [
-            'X', ' ', ' ',
-            ' ', 'X', ' ',
-            ' ', ' ', 'X',
+            '#', ' ', ' ',
+            ' ', '#', ' ',
+            ' ', ' ', '#',
             ],
             [
-            ' ', ' ', 'X',
-            ' ', 'X', ' ',
-            'X', ' ', ' ',
-            ]
-        ],
-        '0' => [
-                [
-                '0', '0', '0',
-                ' ', ' ', ' ',
-                ' ', ' ', ' ',
-                ],
-                [
-                ' ', ' ', ' ',
-                '0', '0', '0',
-                ' ', ' ', ' ',
-                ],
-                [
-                ' ', ' ', ' ',
-                ' ', ' ', ' ',
-                '0', '0', '0',
-                ],
-                [
-                '0', ' ', ' ',
-                '0', ' ', ' ',
-                '0', ' ', ' ',
-                ],
-                [
-                ' ', '0', ' ',
-                ' ', '0', ' ',
-                ' ', '0', ' ',
-                ],
-                [
-                ' ', ' ', '0',
-                ' ', ' ', '0',
-                ' ', ' ', '0',
-                ],
-                [
-                '0', ' ', ' ',
-                ' ', '0', ' ',
-                ' ', ' ', '0',
-                ],
-                [
-                ' ', ' ', '0',
-                ' ', '0', ' ',
-                '0', ' ', ' ',
-                ]
+            ' ', ' ', '#',
+            ' ', '#', ' ',
+            '#', ' ', ' ',
             ]
         ];
 
@@ -192,24 +148,35 @@ class Game
     private function countFieldsMatchedToPattern($pattern, $symbol)
     {
         $foundCount = 0;
-        foreach ($this->board as $key => $field) {
-            if ($field == $symbol && $pattern[$key] == $field) {
-                $foundCount++;
+        // Here were loop, but now I've changed to use native PHP array function
+        // I'm not sure if it "improves" performance
+        \array_walk(
+            $this->board,
+            function ($val, $i) use (&$foundCount, $symbol, $pattern) {
+                if ($val == $symbol && $pattern[$i] == '#') {
+                    $foundCount++;
+                }
             }
-        }
+        );
         return $foundCount;
     }
 
     private function findWinnerByBoardPatterns($symbol)
     {
-        $foundCount = 0;
-        foreach (self::patterns[$symbol] as $pattern) {
-            $foundCount = $this->countFieldsMatchedToPattern($pattern, $symbol);
-            if ($foundCount === 3) {
-                break;
-            }
-        }
-        if ($foundCount !== 3) {
+        // Here were loop, but now I've changed to use native PHP array function
+        // I'm not sure if it "improves" performance
+        $found = \array_reduce(
+            self::patterns,
+            function ($carry, $pattern) use ($symbol) {
+                $carry |= (
+                    $this->countFieldsMatchedToPattern($pattern, $symbol) === 3
+                );
+                return $carry;
+            },
+            false
+        );
+
+        if ($found === false) {
             return null;
         }
         return $this->players[$symbol];
