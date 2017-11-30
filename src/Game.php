@@ -65,7 +65,7 @@ class Game
 
     public function __construct()
     {
-        $this->board = \array_fill(0, 9, ' ');
+        $this->board = \array_fill(0, 9, null);
         $this->history = [];
         $this->errors = self::OK; // Just to remember: such representation of start value explains initial state
         $this->players = [];
@@ -151,7 +151,7 @@ class Game
 
     private function markBoard(Tile $tile, Player $player): void
     {
-        $this->board[$tile->column() + 3 * $tile->row()] = $player->symbol();
+        $this->board[$tile->column() + 3 * $tile->row()] = $player;
     }
 
     private function saveTurnToHistory(Tile $tile): void
