@@ -17,4 +17,31 @@ class TileTest extends TestCase
         self::assertEquals(1, $tile->row());
         self::assertEquals(2, $tile->column());
     }
+
+    /**
+     * @test
+     * @expectedException TicTacToe\Exception\OutOfLegalSizeException
+     */
+    public function throws_exceptions_on_illegal_position__column()
+    {
+        new Tile(1, 3);
+    }
+
+    /**
+     * @test
+     * @expectedException TicTacToe\Exception\OutOfLegalSizeException
+     */
+    public function throws_exceptions_on_illegal_position__row()
+    {
+        new Tile(3, 1);
+    }
+
+    /**
+     * @test
+     * @expectedException TicTacToe\Exception\OutOfLegalSizeException
+     */
+    public function throws_exceptions_on_illegal_position__both()
+    {
+        new Tile(3, 5);
+    }
 }
