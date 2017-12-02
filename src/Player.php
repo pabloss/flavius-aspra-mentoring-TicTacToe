@@ -8,7 +8,7 @@ class Player
     private $symbol;
     private $game;
 
-    public function __construct($symbol, $game)
+    public function __construct(Symbol $symbol, Game  $game)
     {
         $this->symbol = $symbol;
         $this->game = $game;
