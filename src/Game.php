@@ -71,7 +71,7 @@ class Game
         $this->players = [];
     }
 
-    public function players($symbolX, $symbol0)
+    public function players(Symbol $symbolX, Symbol $symbol0)
     {
         if ($symbolX === $symbol0) {
             $this->errors |= self::DUPLICATED_PLAYERS_ERROR;
@@ -82,20 +82,22 @@ class Game
         if (
             empty($this->players) ||
             (
-                isset($this->players[$symbolX]) && empty($this->players[$symbolX])
+                isset($this->players[$symbolX->value()]) &&
+                empty($this->players[$symbolX->value()])
             )
             ||
             (
-                isset($this->players[$symbol0]) && empty($this->players[$symbol0])
+                isset($this->players[$symbol0->value()]) &&
+                empty($this->players[$symbol0->value()])
             )
         ) {
-            $this->players[$symbolX] = new Player($symbolX, $this);
-            $this->players[$symbol0] = new Player($symbol0, $this);
+            $this->players[$symbolX->value()] = new Player($symbolX, $this);
+            $this->players[$symbol0->value()] = new Player($symbol0, $this);
         }
 
         return [
-            $this->players[$symbolX],
-            $this->players[$symbol0]
+            $this->players[$symbolX->value()],
+            $this->players[$symbol0->value()]
         ];
     }
 
