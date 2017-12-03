@@ -6,6 +6,7 @@ namespace TicTacToeTest\acceptance;
 use PHPUnit\Framework\TestCase;
 
 use TicTacToe\Game as TicTacToe;
+use TicTacToe\Symbol;
 use TicTacToe\Tile;
 
 class BasicGameplayTest extends TestCase
@@ -25,7 +26,7 @@ class BasicGameplayTest extends TestCase
     public function complete_happy_path_gameplay()
     {
         $game = new TicTacToe();
-        list($playerX, $player0) = $game->players('X', '0');
+        list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         $playerX->takeTile(new Tile(1, 1));
         $player0->takeTile(new Tile(0, 0));
         $playerX->takeTile(new Tile(0, 1));
@@ -38,7 +39,7 @@ class BasicGameplayTest extends TestCase
     {
         // We are swapping players
         $game = new TicTacToe();
-        list($playerX, $player0) = $game->players('X', '0');
+        list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         $playerX->takeTile(new Tile(2, 2));
         $player0->takeTile(new Tile(1, 1));
         $playerX->takeTile(new Tile(0, 0));
