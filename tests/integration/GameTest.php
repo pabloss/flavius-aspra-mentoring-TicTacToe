@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 use TicTacToe\Game as TicTacToe;
 use TicTacToe\Player;
+use TicTacToe\Symbol;
 
 class GameTest extends TestCase
 {
@@ -17,7 +18,7 @@ class GameTest extends TestCase
     public function create_players()
     {
         $game = new TicTacToe();
-        list($playerX, $player0) = $game->players('X', '0');
+        list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         self::assertInstanceOf(Player::class, $playerX);
         self::assertInstanceOf(Player::class, $player0);
     }
@@ -28,9 +29,9 @@ class GameTest extends TestCase
     public function factor_players()
     {
         $game = new TicTacToe();
-        list($playerX, $player0) = $game->players('X', '0');
-        self::assertEquals('X', $playerX->symbol());
-        self::assertEquals('0', $player0->symbol());
+        list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
+        self::assertEquals('X', $playerX->symbol()->value());
+        self::assertEquals('0', $player0->symbol()->value());
     }
 
     /**
@@ -39,7 +40,7 @@ class GameTest extends TestCase
     public function duplicate_players_not_allowed()
     {
         $game = new TicTacToe();
-        $game->players('X', 'X');
+        $game->players(new Symbol('X'), new Symbol('X'));
         self::assertEquals(
             TicTacToe::DUPLICATED_PLAYERS_ERROR,
             $game->errors() & TicTacToe::DUPLICATED_PLAYERS_ERROR
@@ -52,7 +53,7 @@ class GameTest extends TestCase
     public function players_take_turns()
     {
         $game = new \TicTacToe\Game();
-        list($playerX, $player0) = $game->players('X', '0');
+        list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         $playerX->takeTile(new \TicTacToe\Tile(0, 0));
         $playerX->takeTile(new \TicTacToe\Tile(1, 1));
         self::assertEquals(
@@ -67,7 +68,7 @@ class GameTest extends TestCase
     public function game_could_not_allow_to_be_started_by_player0()
     {
         $game = new \TicTacToe\Game();
-        list($playerX, $player0) = $game->players('X', '0');
+        list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         $player0->takeTile(new \TicTacToe\Tile(0, 0));
 
         self::assertEquals(

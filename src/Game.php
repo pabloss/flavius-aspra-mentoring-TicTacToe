@@ -73,7 +73,7 @@ class Game
 
     public function players(Symbol $symbolX, Symbol $symbol0)
     {
-        if ($symbolX === $symbol0) {
+        if ($symbolX == $symbol0) {
             $this->errors |= self::DUPLICATED_PLAYERS_ERROR;
         }
 
