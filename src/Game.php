@@ -106,7 +106,23 @@ class Game
         return $this->board;
     }
 
-    public function takeTile(Tile $tile, Player $player)
+    public function history()
+    {
+        return $this->history;
+    }
+
+    public function winner()
+    {
+        return $this->findWinnerByBoardPatterns('X') ??
+            $this->findWinnerByBoardPatterns('0');
+    }
+
+    public function errors()
+    {
+        return $this->errors;
+    }
+
+    private function takeTile(Tile $tile, Player $player)
     {
         if (
             empty($this->lastTurn) &&
@@ -124,21 +140,6 @@ class Game
         }
     }
 
-    public function history()
-    {
-        return $this->history;
-    }
-
-    public function winner()
-    {
-        return $this->findWinnerByBoardPatterns('X') ??
-            $this->findWinnerByBoardPatterns('0');
-    }
-
-    public function errors()
-    {
-        return $this->errors;
-    }
 
     private function saveLastTurn(Player $player)
     {

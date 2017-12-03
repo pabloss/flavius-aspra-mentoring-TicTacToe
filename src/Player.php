@@ -22,6 +22,11 @@ class Player
 
     public function takeTile(Tile $tile)
     {
-        $this->game->takeTile($tile, $this);
+        $player = $this;
+        $callback = function () use ($tile, $player) {
+            $this->takeTile($tile, $player);
+        };
+
+        $callback->call($this->game);
     }
 }
