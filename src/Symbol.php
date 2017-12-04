@@ -13,13 +13,7 @@ class Symbol
 
     public function __construct($value)
     {
-        if (
-            ($value !== '0') &&
-            (
-                empty($value) ||
-                !in_array($value, self::ALLOWED_SYMBOL_VALUES)
-            )
-        ) {
+        if (!in_array($value, self::ALLOWED_SYMBOL_VALUES, true)) {
             throw new NotAllowedSymbolValue();
         }
 
