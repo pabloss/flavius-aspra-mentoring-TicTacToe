@@ -79,18 +79,7 @@ class Game
 
         $this->startingPlayerSymbol = $symbolX;
 
-        if (
-            empty($this->players) ||
-            (
-                isset($this->players[$symbolX->value()]) &&
-                empty($this->players[$symbolX->value()])
-            )
-            ||
-            (
-                isset($this->players[$symbol0->value()]) &&
-                empty($this->players[$symbol0->value()])
-            )
-        ) {
+        if (empty($this->players)) {
             $this->players[$symbolX->value()] = new Player($symbolX, $this);
             $this->players[$symbol0->value()] = new Player($symbol0, $this);
         }
