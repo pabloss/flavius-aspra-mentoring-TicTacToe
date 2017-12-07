@@ -7,13 +7,20 @@ use TicTacToe\Exception\NotAllowedTypeValue;
 
 class PlayerType
 {
-    const POSSIBLE_TYPES = ['AI', 'Real'];
+    const AI_TYPE = 'AI';
+    const REAL_TYPE = 'Real';
+
 
     private $value;
 
     public function __construct($value)
     {
-        if (!\in_array($value, self::POSSIBLE_TYPES)) {
+        if (!\in_array($value,
+            [
+                self::AI_TYPE,
+                self::REAL_TYPE
+            ]
+        )) {
             throw new NotAllowedTypeValue();
         }
         $this->value = $value;
