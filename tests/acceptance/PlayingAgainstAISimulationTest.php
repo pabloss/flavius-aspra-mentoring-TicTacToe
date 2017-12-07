@@ -18,13 +18,16 @@ class PlayingAgainstAISimulationTest extends TestCase
     public function random_looped_taken_tilles_should_fill_whole_board()
     {
         $game = new TicTacToe();
-        list($aiPlayer, $player0) = $game->realAndAIPLayerPair(new Symbol('X'), new Symbol('0'));
-
-        self::assertEquals(9, \count($game->board()));
+        $factory = new \TicTacToe\Factory\PlayerFactory();
+        $playerX = $factory->createAI('X');
+        $player0 = $factory->createReal('0');
         for ($i = 0; $i < 9; $i++) {
-            /** @var AIPlayer $aiPlayer */
-            $aiPlayer->takeTile();
-            self::assertEquals(8 - $i, \count($game->board()));
+            $playerX->takeTile();
+            $player0->takeTile($this->findNextFreeTile($game));
         }
+        self::assertTrue(
+            $game->winner()->symbol()->value() === 'X' ||
+            $game->winner()->symbol()->value() === '0'
+        );
     }
 }
