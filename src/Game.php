@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace TicTacToe;
 
+use TicTacToe\AI\AIPlayer;
+use TicTacToe\Exception\SymbolMissedException;
+
 class Game
 {
     const patterns = [
@@ -71,7 +74,31 @@ class Game
         $this->players = [];
     }
 
-    public function players(Symbol $symbolX, Symbol $symbol0)
+    public function players(array $playerXData, array $player0Data)
+    {
+        list($symbolX, $symbol0) =
+            $this->extractSymbolsFromPlayersData($playerXData, $player0Data);
+
+        $this->appendGameToPlayersData($playerXData, $player0Data);
+
+        if ($symbolX == $symbol0) {
+            $this->errors |= self::DUPLICATED_PLAYERS_ERROR;
+        }
+
+        $this->startingPlayerSymbol = $symbolX;
+
+        if (empty($this->players)) {
+            $this->players[$symbolX->value()] = Player::createFromArray($playerXData);
+            $this->players[$symbol0->value()] = Player::createFromArray($player0Data);
+        }
+
+        return [
+            $this->players[$symbolX->value()],
+            $this->players[$symbol0->value()]
+        ];
+    }
+
+    public function realAndAIPLayerPair(Symbol $symbolX, Symbol $symbol0)
     {
         if ($symbolX == $symbol0) {
             $this->errors |= self::DUPLICATED_PLAYERS_ERROR;
@@ -80,7 +107,7 @@ class Game
         $this->startingPlayerSymbol = $symbolX;
 
         if (empty($this->players)) {
-            $this->players[$symbolX->value()] = new Player($symbolX, $this);
+            $this->players[$symbolX->value()] = new AIPlayer(new Player($symbolX, $this), $this);
             $this->players[$symbol0->value()] = new Player($symbol0, $this);
         }
 
@@ -90,17 +117,17 @@ class Game
         ];
     }
 
-    public function board()
+    public function &board()
     {
         return $this->board;
     }
 
-    public function history()
+    public function &history()
     {
         return $this->history;
     }
 
-    public function winner()
+    public function winner(): Player
     {
         return $this->findWinnerByBoardPatterns('X') ??
             $this->findWinnerByBoardPatterns('0');
@@ -186,5 +213,24 @@ class Game
             return null;
         }
         return $this->players[$symbol];
+    }
+
+    private function extractSymbolsFromPlayersData(array $playerXData, array $player0Data): array
+    {
+        if (
+            !isset($playerXData['symbol']) ||
+            !isset($player0Data['symbol'])
+        ) {
+            throw new SymbolMissedException();
+        }
+        list($symbolX, $symbol0) = [$playerXData['symbol'], $player0Data['symbol']];
+        return array($symbolX, $symbol0);
+    }
+
+    private function appendGameToPlayersData(array &$playerXData, array &$player0Data): array
+    {
+        $playerXData['game'] = $this;
+        $player0Data['game'] = $this;
+        return array($playerXData, $player0Data);
     }
 }
