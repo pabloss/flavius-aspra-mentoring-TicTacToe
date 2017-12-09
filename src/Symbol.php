@@ -7,13 +7,21 @@ use TicTacToe\Exception\NotAllowedSymbolValue;
 
 class Symbol
 {
-    const ALLOWED_SYMBOL_VALUES = ['X', '0'];
+    const PLAYER_X_SYMBOL = 'X';
+    const PLAYER_0_SYMBOL = '0';
 
     private $value;
 
     public function __construct($value)
     {
-        if (!in_array($value, self::ALLOWED_SYMBOL_VALUES, true)) {
+        if (!in_array(
+            $value,
+            [
+                self::PLAYER_X_SYMBOL,
+                self::PLAYER_0_SYMBOL
+            ],
+            true
+        )) {
             throw new NotAllowedSymbolValue();
         }
 
