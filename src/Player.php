@@ -3,15 +3,19 @@ declare(strict_types=1);
 
 namespace TicTacToe;
 
+use TicTacToe\Type\PlayerType as Type;
+
 class Player
 {
     private $symbol;
     private $game;
+    private $type;
 
-    public function __construct(Symbol $symbol, Game  $game)
+    public function __construct(Symbol $symbol, Game $game, Type $type)
     {
         $this->symbol = $symbol;
         $this->game = $game;
+        $this->type = $type;
     }
 
 
@@ -28,5 +32,10 @@ class Player
         };
 
         $callback->call($this->game);
+    }
+
+    public function type()
+    {
+        return $this->type;
     }
 }
