@@ -18,6 +18,14 @@ class Player
         $this->type = $type;
     }
 
+    public static function createFromArray(array $data)
+    {
+        return new Player(
+            $data['symbol'],
+            $data['game'],
+            $data['type']
+        );
+    }
 
     public function symbol()
     {

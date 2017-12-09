@@ -16,7 +16,13 @@ class PlayerTest extends TestCase
      */
     public function player_has_symbol()
     {
-        $player = new Player(new Symbol('X'), new Game(), new Type(Type::AI_TYPE));
+        $player = Player::createFromArray(
+            [
+                'symbol' => new Symbol('X'),
+                'game' => new Game(),
+                'type' => new Type(Type::AI_TYPE)
+            ]
+        );
         self::assertEquals(new Symbol('X'), $player->symbol());
         self::assertEquals(new Type('AI'), $player->type());
     }
