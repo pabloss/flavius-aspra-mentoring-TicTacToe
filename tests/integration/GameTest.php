@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace TicTacToeTest\integration;
 
 use PHPUnit\Framework\TestCase;
-
 use TicTacToe\Game as TicTacToe;
 use TicTacToe\Player;
 use TicTacToe\Symbol;

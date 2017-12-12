@@ -44,18 +44,38 @@ class Player
             $tile = $this->takeRandomFreeTile($this->game);
         }
 
-        $player = $this;
-        $callback = function () use ($tile, $player) {
-            $this->takeTile($player, $tile);
+        $callback = function ($player, $tile) {
+            return $this->takeTile($player, $tile);
         };
 
-        return $callback->call($this->game);
+        $player = $this;
+        return $callback->call($this->game, $player, $tile);
     }
 
     public function takeRandomFreeTile(Game $game)
     {
         $board = $game->board();
-        return new Tile(0, 0);
+        $freeTileIndexes = $this->takeFreeTileIndexes($board);
+        $randomIndex = $this->chooseRandomIndex($freeTileIndexes);
+        list($column, $row) = $this->coordinatesFromIndex($randomIndex);
+        return new Tile($row, $column);
+    }
+
+    private function takeFreeTileIndexes(array $board)
+    {
+        $freeTileIndexes = [];
+        \array_walk($board, function ($value, $key) use (&$freeTileIndexes) {
+            if (\is_null($value)) {
+                $freeTileIndexes[] = $key;
+            }
+        });
+        return $freeTileIndexes;
+    }
+
+    private function chooseRandomIndex(array $freeTileIndexes)
+    {
+        $arrayLength = \count($freeTileIndexes);
+        return $freeTileIndexes[\rand(0, $arrayLength - 1)];
     }
 
     public function type()
@@ -71,5 +91,16 @@ class Player
     public function setAsReal()
     {
         $this->type = new Type(Type::REAL_TYPE);
+    }
+
+    /**
+     * @param $randomIndex
+     * @return array
+     */
+    private function coordinatesFromIndex($randomIndex): array
+    {
+        $column = $randomIndex % 3;
+        $row = \intval(\floor($randomIndex / 3.0));
+        return array($column, $row);
     }
 }

@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace TicTacToe;
 
-use TicTacToe\AI\AIPlayer;
-
 class Game
 {
     const patterns = [

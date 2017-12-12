@@ -15,7 +15,8 @@ class PlayerType
 
     public function __construct($value)
     {
-        if (!\in_array($value,
+        if (!\in_array(
+            $value,
             [
                 self::AI_TYPE,
                 self::REAL_TYPE
