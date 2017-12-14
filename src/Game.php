@@ -120,10 +120,11 @@ class Game
         return $this->history;
     }
 
-    public function winner(): Player
+    public function winner()
     {
-        return $this->findWinnerByBoardPatterns('X') ??
-            $this->findWinnerByBoardPatterns('0');
+        return
+            $this->findWinnerByBoardPatterns(new Symbol(Symbol::PLAYER_X_SYMBOL)) ??
+            $this->findWinnerByBoardPatterns(new Symbol(Symbol::PLAYER_0_SYMBOL));
     }
 
     public function errors()
@@ -173,7 +174,7 @@ class Game
         $this->history[\count($this->history) % 9] = [$tile->row(), $tile->column()];
     }
 
-    private function countFieldsMatchedToPattern($pattern, $symbol)
+    private function countFieldsMatchedToPattern($pattern, Symbol $symbol)
     {
         $foundCount = 0;
         // Here were loop, but now I've changed to use native PHP array function
@@ -181,7 +182,8 @@ class Game
         \array_walk(
             $this->board,
             function ($val, $i) use (&$foundCount, $symbol, $pattern) {
-                if ($val == $symbol && $pattern[$i] == '#') {
+                /** @var Player $val */
+                if (\is_null($val) === false && $val->symbol()->value() === $symbol->value() && $pattern[$i] == '#') {
                     $foundCount++;
                 }
             }
@@ -189,14 +191,16 @@ class Game
         return $foundCount;
     }
 
-    private function findWinnerByBoardPatterns($symbol)
+    private function findWinnerByBoardPatterns(Symbol $symbol)
     {
         // Here were loop, but now I've changed to use native PHP array function
         // I'm not sure if it "improves" performance
         $found = \array_reduce(
             self::patterns,
             function ($carry, $pattern) use ($symbol) {
-                $carry |= (
+                $carry =
+                (
+                    $carry ||
                     $this->countFieldsMatchedToPattern($pattern, $symbol) === 3
                 );
                 return $carry;
@@ -207,6 +211,6 @@ class Game
         if ($found === false) {
             return null;
         }
-        return $this->players[$symbol];
+        return $this->players[$symbol->value()];
     }
 }
