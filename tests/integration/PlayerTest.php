@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace TicTacToeTest\integration;
 
 use PHPUnit\Framework\TestCase;
+use TicTacToe\AI\AI;
 use TicTacToe\Game as TicTacToe;
 use TicTacToe\Player;
 use TicTacToe\Symbol;
@@ -11,23 +12,8 @@ use TicTacToe\Tile;
 
 class PlayerTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function when_player_set_as_AI_it_allows_to_choose_tile_by_itself()
-    {
-        $game = new TicTacToe();
-        $symbol = new Symbol(Symbol::PLAYER_X_SYMBOL);
-        $player = new Player($symbol, $game);
-        $player->setAsAI();
-        self::assertInstanceOf(Tile::class, $player->takeTile());
-        $player->setAsReal();
-        $player->takeTile();
-        self::assertEquals(
-            TicTacToe::PLAYER_IS_NOT_AI_ERROR,
-            $game->errors() & TicTacToe::PLAYER_IS_NOT_AI_ERROR
-        );
-    }
+    /** @var  TicTacToe $game */
+    private $game;
 
     /**
      * @test
@@ -35,18 +21,18 @@ class PlayerTest extends TestCase
     public function looping_AI_player_fills_whole_board_in_9_turns()
     {
         $game = new TicTacToe();
+        $ai = new AI($game);
+        $this->game = $game;
         $symbolX = new Symbol(Symbol::PLAYER_X_SYMBOL);
         $symbol0 = new Symbol(Symbol::PLAYER_0_SYMBOL);
         list($player, $notUsedPlayer) = $game->players($symbolX, $symbol0);
-        $player->setAsAI();
-        $notUsedPlayer->setAsAI();
         for (
             $expectedFilledCount = 2;
             $expectedFilledCount <= 9;
             $expectedFilledCount += 2
         ) {
-            $player->takeTile();
-            $notUsedPlayer->takeTile();
+            $player->takeTile($ai->takeRandomFreeTile());
+            $notUsedPlayer->takeTile($this->simulate_choosing_tiles_of_real_player());
             $actualFilledCount = \array_reduce($game->board(), function ($carry, $item) {
                 if (\is_null($item) === false) {
                     $carry++;
@@ -70,5 +56,11 @@ class PlayerTest extends TestCase
                 $actualFilledCount
             );
         }
+    }
+
+    private function simulate_choosing_tiles_of_real_player()
+    {
+        $ai = new AI($this->game);
+        return $ai->takeRandomFreeTile();
     }
 }

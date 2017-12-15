@@ -22,22 +22,4 @@ class PlayerTest extends TestCase
         $player = new Player($symbol, $game);
         self::assertEquals($symbol, $player->symbol());
     }
-
-    /**
-     * @test
-     */
-    public function ai_player_checking_type()
-    {
-        $game = new TicTacToe();
-        $symbol = new Symbol(Symbol::PLAYER_X_SYMBOL);
-
-        $player = new Player($symbol, $game);
-        self::assertEquals(new Type(Type::REAL_TYPE), $player->type());
-
-        $player->setAsReal();
-        self::assertEquals(new Type(Type::REAL_TYPE), $player->type());
-
-        $player->setAsAI();
-        self::assertEquals(new Type(Type::AI_TYPE), $player->type());
-    }
 }

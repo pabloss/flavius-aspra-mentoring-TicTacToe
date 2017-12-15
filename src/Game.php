@@ -52,7 +52,6 @@ class Game
     const DUPLICATED_PLAYERS_ERROR = 1;
     const DUPLICATED_TURNS_ERROR = 2;
     const GAME_STARTED_BY_PLAYER0_ERROR = 4;
-    const PLAYER_IS_NOT_AI_ERROR = 8;
 
     private $board;
     private $history;
@@ -132,7 +131,7 @@ class Game
         return $this->errors;
     }
 
-    private function takeTile(Player $player, Tile $tile = null)
+    private function takeTile(Player $player, Tile $tile)
     {
         if (
             empty($this->lastTurn) &&
@@ -148,7 +147,7 @@ class Game
 
             $this->saveTurnToHistory($tile);
         }
-
+        
         return $tile;
     }
 
