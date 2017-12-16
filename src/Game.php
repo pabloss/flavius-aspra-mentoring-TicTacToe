@@ -90,25 +90,6 @@ class Game
         ];
     }
 
-    public function realAndAIPLayerPair(Symbol $symbolX, Symbol $symbol0)
-    {
-        if ($symbolX == $symbol0) {
-            $this->errors |= self::DUPLICATED_PLAYERS_ERROR;
-        }
-
-        $this->startingPlayerSymbol = $symbolX;
-
-        if (empty($this->players)) {
-            $this->players[$symbolX->value()] = new AIPlayer(new Player($symbolX, $this), $this);
-            $this->players[$symbol0->value()] = new Player($symbol0, $this);
-        }
-
-        return [
-            $this->players[$symbolX->value()],
-            $this->players[$symbol0->value()]
-        ];
-    }
-
     public function &board()
     {
         return $this->board;
