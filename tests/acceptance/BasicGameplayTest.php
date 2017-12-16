@@ -25,7 +25,8 @@ class BasicGameplayTest extends TestCase
      */
     public function complete_happy_path_gameplay()
     {
-        $game = new TicTacToe();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         $playerX->takeTile(new Tile(1, 1));
         $player0->takeTile(new Tile(0, 0));
@@ -38,7 +39,8 @@ class BasicGameplayTest extends TestCase
     public function complete_happy_path_gameplay_other_player_wins()
     {
         // We are swapping players
-        $game = new TicTacToe();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         $playerX->takeTile(new Tile(2, 2));
         $player0->takeTile(new Tile(1, 1));
