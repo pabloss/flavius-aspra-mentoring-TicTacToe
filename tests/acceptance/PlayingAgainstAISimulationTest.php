@@ -21,7 +21,8 @@ class PlayingAgainstAISimulationTest extends TestCase
      */
     public function random_looped_taken_tiles_should_fill_whole_board()
     {
-        $game = new TicTacToe();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         $this->game = $game;
         list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         $ai = new AI($game);
