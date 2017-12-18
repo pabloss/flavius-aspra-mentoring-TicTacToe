@@ -63,10 +63,10 @@ class Game
 
     private $errors;
 
-    public function __construct()
+    public function __construct(\TictacToe\Game\History $history)
     {
         $this->board = \array_fill(0, 9, null);
-        $this->history = [];
+        $this->history = $history;
         $this->errors = self::OK; // Just to remember: such representation of start value explains initial state
         $this->players = [];
     }
@@ -151,7 +151,7 @@ class Game
 
     private function saveTurnToHistory(Tile $tile): void
     {
-        $this->history[\count($this->history) % 9] = [$tile->row(), $tile->column()];
+        $this->history->set([$tile->row(), $tile->column()]);
     }
 
     private function countFieldsMatchedToPattern($pattern, Symbol $symbol)

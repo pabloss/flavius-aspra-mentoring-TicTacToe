@@ -36,6 +36,9 @@ class BasicGameplayTest extends TestCase
         $this->assertSame($playerX, $game->winner());
     }
 
+    /**
+     * @test
+     */
     public function complete_happy_path_gameplay_other_player_wins()
     {
         // We are swapping players
