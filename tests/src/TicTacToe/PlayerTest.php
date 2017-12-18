@@ -16,7 +16,8 @@ class PlayerTest extends TestCase
      */
     public function player_has_symbol()
     {
-        $game = new TicTacToe();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         $symbol = new Symbol(Symbol::PLAYER_X_SYMBOL);
 
         $player = new Player($symbol, $game);

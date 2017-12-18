@@ -15,7 +15,8 @@ class GameTest extends TestCase
      */
     public function game_should_record_correct_turns()
     {
-        $game = new TicTacToe();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         $playerX->takeTile(new \TicTacToe\Tile(0, 0));
         $player0->takeTile(new \TicTacToe\Tile(0, 1));
@@ -30,7 +31,8 @@ class GameTest extends TestCase
      */
     public function game_should_not_produce_new_players_if_ones_already_exist()
     {
-        $game = new TicTacToe();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         list($playerX1, $player01) = $game->players(new Symbol('X'), new Symbol('0'));
         list($playerX2, $player02) = $game->players(new Symbol('X'), new Symbol('0'));
 

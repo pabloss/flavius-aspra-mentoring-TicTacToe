@@ -97,7 +97,7 @@ class Game
 
     public function &history()
     {
-        return $this->history;
+        return $this->history->content();
     }
 
     public function winner()

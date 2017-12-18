@@ -39,4 +39,19 @@ class HistoryTest extends TestCase
         }
         self::assertEquals($history::LIMIT, $history->length());
     }
+
+    /**
+     * @test
+     */
+    public function history_should_return_contents()
+    {
+        $expectedContent = [];
+        $history = new History();
+        for ($i = 0; $i < History::LIMIT; $i++) {
+            $value = \rand(0, 1000);
+            $expectedContent[$history->length() % History::LIMIT] = $value;
+            $history->set($value);
+        }
+        self::assertEquals($expectedContent, $history->content());
+    }
 }

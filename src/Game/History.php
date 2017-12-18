@@ -23,4 +23,9 @@ class History
     {
         return \count($this->timeLine);
     }
+
+    public function &content()
+    {
+        return $this->timeLine;
+    }
 }
