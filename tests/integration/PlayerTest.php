@@ -20,7 +20,8 @@ class PlayerTest extends TestCase
      */
     public function looping_AI_player_fills_whole_board_in_9_turns()
     {
-        $game = new TicTacToe();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         $ai = new AI($game);
         $this->game = $game;
         $symbolX = new Symbol(Symbol::PLAYER_X_SYMBOL);
