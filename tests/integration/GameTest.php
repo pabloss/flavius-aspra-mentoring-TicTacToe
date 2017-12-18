@@ -16,7 +16,8 @@ class GameTest extends TestCase
      */
     public function create_players()
     {
-        $game = new TicTacToe();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         self::assertInstanceOf(Player::class, $playerX);
         self::assertInstanceOf(Player::class, $player0);
@@ -27,7 +28,8 @@ class GameTest extends TestCase
      */
     public function factor_players()
     {
-        $game = new TicTacToe();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         self::assertEquals('X', $playerX->symbol()->value());
         self::assertEquals('0', $player0->symbol()->value());
@@ -38,7 +40,8 @@ class GameTest extends TestCase
      */
     public function duplicate_players_not_allowed()
     {
-        $game = new TicTacToe();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         $game->players(new Symbol('X'), new Symbol('X'));
         self::assertEquals(
             TicTacToe::DUPLICATED_PLAYERS_ERROR,
@@ -51,7 +54,8 @@ class GameTest extends TestCase
      */
     public function players_take_turns()
     {
-        $game = new \TicTacToe\Game();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         $playerX->takeTile(new \TicTacToe\Tile(0, 0));
         $playerX->takeTile(new \TicTacToe\Tile(1, 1));
@@ -66,7 +70,8 @@ class GameTest extends TestCase
      */
     public function game_could_not_allow_to_be_started_by_player0()
     {
-        $game = new \TicTacToe\Game();
+        $history = new TicTacToe\History();
+        $game = new TicTacToe($history);
         list($playerX, $player0) = $game->players(new Symbol('X'), new Symbol('0'));
         $player0->takeTile(new \TicTacToe\Tile(0, 0));
 
